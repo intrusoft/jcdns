@@ -5,3 +5,6 @@ Authorative name server intended for load balancing requests across different IP
 
 Supports random choice, or percent of traffic as schedulers
 
+$ python dns.py
+$ dig abc.com @localhost
+

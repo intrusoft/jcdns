@@ -1,17 +1,12 @@
-"""
-
-Parse DNS UDP queries and format responses, only UDP for now
-
-"""
+""" Parse DNS UDP queries and format responses, only UDP for now """
 
 import struct
 from trafficengine import TrafficEngine
 
 DNS_QTYPES = {1:'A', 2:'NS', 3:'CNAME', 4:'SOA', 5:'PTR', 6:'HINFO', 7:'MX', 8:'TXT'}
 
-# todo: use pointers in rdata
-
 class DNSProcess():
+    """ handle parsing queries and constructing responses using RFC-1035 """
     def __init__(self):
         self._te = TrafficEngine()
       
@@ -20,6 +15,9 @@ class DNSProcess():
         return(records)    
 
     def parse(self,packet):
+        """ Parse datagram and call appropriate resource record action, only A is supported 
+            Convert the query into a dictionary
+        """
         dq = {}
         dq['id'] = struct.unpack('>H', packet[:2])[0]
         dq['qr'] = (ord(packet[2]) >> 7) 
@@ -67,14 +65,13 @@ class DNSProcess():
         if not records or len(records) == 0:
             q['rcode'] = 3
             
-
     def genresponse(self, q):
         q['qdcount'] = 0
         if q['resource_records']:
             q['ancount'] = len(q['resource_records'])
         q['qr'] = 1
         q['tc'] = 0
-        q['ra'] = 1     #commented this out, maybe this gets rid of the warning
+        q['ra'] = 1     
 
     def packresponse(self, q):
         message = None
@@ -109,7 +106,6 @@ class DNSProcess():
                 rawrr += struct.pack('>H', rr['class'])
                 rawrr += struct.pack('>I', rr['ttl'])
 
-                # todo: what if othan arecord returned
                 if rr['type'] == 1:
                     rawrr += "\x00\x04" # rdata len
                     for i in rr['ip'].split('.'):

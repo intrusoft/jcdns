@@ -1,8 +1,4 @@
-"""
-
-Simple code to process one request at a time
-
-"""
+""" Simple code to process one request at a time """
 
 from  dnsprocess import DNSProcess
 import socket

@@ -1,8 +1,4 @@
-"""
-
-Implement business logic for how to respond to queries and shape traffic
-
-"""
+""" Implement business logic for how to respond to queries and shape traffic """
 
 import random
 from config import Config

@@ -15,8 +15,8 @@ from server import Base
 
 def main():
     parser = argparse.ArgumentParser(description='JCDNS')
-    parser.add_argument('-f', default='example.json')
-    parser.add_argument('-d', action='store_true')
+    parser.add_argument('-f', default='example.json', help='path of zone config')
+    parser.add_argument('-d', action='store_true', help='fork and detatch jcdns as daemon')
     args = parser.parse_args()
     config.configfile = args.f
 

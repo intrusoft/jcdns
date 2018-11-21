@@ -10,7 +10,9 @@ python jcdns.py
 dig abc.com @localhost
 
 Usage: 
+
 jcdns.py -f zones.json (path to zones JSON file)
+
 jcdns.py -d (fork and detach process as daemon)
 
 
